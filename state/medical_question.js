@@ -13,9 +13,9 @@ bot.onText(/سوال پزشکی دارم|بازگشت به صفحه تخصص ه�
         resize_keyboard: true
       }
     }
-    let speciality = await Doctor.get_speciality_list()
-    speciality.result.medicalSpecialties.forEach((item, index) => {
-      let text = `${item.id} ${item.title}`
+        let specialities = await Doctor.get_speciality_list();
+        specialities.forEach((item, index) => {
+            let text = `${item.title}`
       //   if (index > 11) {
       //     return
       //   }
@@ -41,6 +41,6 @@ bot.onText(/سوال پزشکی دارم|بازگشت به صفحه تخصص ه�
 
     bot.sendMessage(msg.chat.id, message, options)
   } catch (error) {
-    console.log(error)
+        console.error(error);
   }
 })

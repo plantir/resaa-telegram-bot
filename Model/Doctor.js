@@ -42,22 +42,33 @@ class Doctor {
       uri: uri
     })
   }
-  static get_speciality_list() {
-    let model = new Doctor()
-    return request({
-      method: 'GET',
-      json: true,
-      uri: `${model.API_URL}/Rubika/Doctors/MedicalSpecialties`
-    })
-  }
-  static get_time_price(id) {
-    let model = new Doctor()
-    return request({
-      method: 'GET',
-      json: true,
-      uri: `${model.API_URL}/Rubika/Doctors/${id}/communicationquote`
-    })
-  }
+    static get_speciality_list() {
+
+        return new Promise((resolve, reject) => {
+            redis.get(`speciality_list`, async (err, specialities) => {
+                if (specialities) {
+                    return resolve(JSON.parse(specialities))
+                } else {
+                    let model = new Doctor()
+                    let res = await request({
+                        method: 'GET',
+                        json: true,
+                        uri: `${model.API_URL}/Rubika/Doctors/MedicalSpecialties`
+                    })
+                    redis.set(`speciality_list`, JSON.stringify(res.result.medicalSpecialties))
+                    return resolve(res.result.medicalSpecialties)
+                }
+            })
+        })
+    }
+    static get_time_price(id, phone) {
+        let model = new Doctor()
+        return request({
+            method: 'GET',
+            json: true,
+            uri: `${model.API_URL}/Rubika/Doctors/${id}/communicationquote?patientphonenumber=${phone}`
+        })
+    }
   static image_id(doctor_id) {
     let model = new Doctor()
     return new Promise((resolve, reject) => {
@@ -79,9 +90,30 @@ class Doctor {
       })
     })
   }
-  static saveImage(doctor_id, response) {
-    redis.set(`doctor_${doctor_id}_image`, response.photo[1].file_id)
-  }
+    static request_test_answer(id, phone) {
+        return new Promise((resolve, reject) => {
+
+            let model = new Doctor()
+            return request({
+                method: 'GET',
+                json: true,
+                uri: `${model.API_URL}/Rubika/Doctors/${id}/requestTestAnswer?patientphonenumber=${phone}`
+            }).then(res => {
+                resolve(res)
+            }).catch(err => {
+                // resolve({
+                //     status: 'needMoney',
+                //     user_charge: 8000,
+                //     request_price: 15000
+                // })
+                resolve({
+                    status: 'ok',
+                    user_charge: 8000,
+                    request_price: 15000
+                })
+            })
+        })
+    }
 }
 
-module.exports = Doctor
+module.exports = Doctor;

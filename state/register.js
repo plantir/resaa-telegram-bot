@@ -3,6 +3,7 @@ const Doctor = require('../Model/Doctor')
 const bot = require('../bot')
 const _enum = require('../config/enum')
 const _ = require('lodash')
+const DoctorProvider = require('../provider/DoctorProvider')
 bot.on('video', msg => {
   console.log(msg)
 })
@@ -30,41 +31,19 @@ bot.on('message', async msg => {
   }
   let visit_doctor = await user.visit_doctor
   if (!visit_doctor) {
-    options.reply_markup.keyboard.push([
-      {
-        text: 'بازگشت به خانه'
-      }
-    ])
+    options.reply_markup.keyboard.push([{
+      text: 'بازگشت به خانه'
+    }])
   }
 
   if (!visit_doctor) {
     return
   }
-  let res = await Doctor.find(visit_doctor)
-  let doctor = res.result.doctor
-  let minute_array = doctor.specialty.id == 41 ? [5, 10, 15, 30] : [3, 5, 10]
-  let price = await Doctor.get_time_price(visit_doctor)
-  let costPerMinute = price.result.quote.costPerMinute
-  let amount_list = calc_amount(costPerMinute, minute_array)
-  message = `هزینه تماس با دکتر ${doctor.firstName} ${doctor.lastName}`
-  message += `\n\nدر صورتی که مدت زمان مکالمه کمتر از این مقدار باشد پول در حساب شما میماند و میتوانید در تماس های بعدی از آن استفاده نمایید`
-  message += `\n\nدر صورت عدم برقراری ارتباط میتوانید با پشتیبانی تماس گرفته و درخواست استرداد وجه نمایید `
-  for (let item of amount_list) {
-    options.reply_markup.keyboard.push([
-      {
-        text: `${item.perioud} دقیقه ${item.amount} تومان`
-      }
-    ])
-  }
-  options.reply_markup.keyboard.push([
-    {
-      text: 'بازگشت به خانه'
-    }
-  ])
+  DoctorProvider.sned_doctor_profile(msg.chat.id, visit_doctor)
 
-  bot.sendMessage(msg.chat.id, message, options)
 })
-function calc_amount (costPerMinute, minutes) {
+
+function calc_amount(costPerMinute, minutes) {
   let amount_list = []
   for (let min of minutes) {
     let amount = costPerMinute * min

@@ -5,6 +5,8 @@
   "license": "MIT",
   "dependencies": {
     "node-telegram-bot-api": "^0.30.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
     "redis": "^2.8.0"
   }
 }
