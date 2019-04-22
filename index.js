@@ -19,7 +19,7 @@ if (process.env.NODE_ENV !== 'development') {
     const url = 'https://telegram.resaa.net';
     const express = require('express');
     const bodyParser = require('body-parser');
-    bot.setWebHook(url);
+    // bot.setWebHook(url);
     const app = express();
     app.use(bodyParser.json());
     app.post(`/`, (req, res) => {
