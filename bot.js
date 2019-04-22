@@ -14,6 +14,6 @@ class Bot extends TelegramBot {
   }
 }
 var bot = new Bot(token, {
-  polling: process.env.NODE_ENV ? true : false,
+  polling: process.env.NODE_ENV == 'development' ? true : false,
 })
 module.exports = bot
