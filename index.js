@@ -16,10 +16,10 @@ if (process.env.NODE_ENV !== 'development') {
     const bot = require('./bot')
     const port = 80;
     const token = bot.token;
-    const url = 'https://rubika.resaa.net';
+    const url = 'https://telegram.resaa.net';
     const express = require('express');
     const bodyParser = require('body-parser');
-    bot.updateBotEndpoints(url);
+    bot.setWebHook(url);
     const app = express();
     app.use(bodyParser.json());
     app.post(`/`, (req, res) => {
