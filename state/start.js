@@ -1,7 +1,7 @@
 const User = require('../Model/User')
 const bot = require('../bot')
 const _enum = require('../config/enum')
-const start_video = 'BAADBAAD_QQAAnSf6FGNx82JyiDeDQI'
+const start_video = process.env.NODE_ENV === 'development' ? 'BAADBAAD0wUAAtRquVDOyHp6nv1negI' : 'BAADBAAD_QQAAnSf6FGNx82JyiDeDQI'
 
 bot.onText(/شروع|بازگشت به خانه|start/, async msg => {
   let user = new User(msg.chat.id)

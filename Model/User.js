@@ -3,7 +3,7 @@ const redis = dbConf.redis
 const request = require('request-promise');
 const fs = require('fs')
 const bot_token = 'DG0RIQVKTTKCUEUGURNGOHBLWULTSSQFHISIFXGXDACBMGZFWKDWNBLZKQLFSJDY'
-const doctor_bot_api = process.env.NODE_ENV === 'development' ? 'http://localhost:8888' : 'https://doctorsTelegramBot.resaa.net'
+const doctor_bot_api = process.env.NODE_ENV === 'polling' ? 'http://localhost:8888' : 'http://localhost:8888'
 class User {
 
     constructor(chatId) {
@@ -89,7 +89,7 @@ class User {
             }).catch(err => {
                 if (err.error.code == 409) {
                     this.phone = phoneNumber;
-                    reject("این شماره موبایل در سیستم وجود دارد.");
+                    reject("شما با این شماره موبایل قبلا ثبت نام کرده بودید و با موفقیت وارد شدید");
                 } else {
                     reject("خطایی رخ داده است لطفا بعدا امتحان کنید")
                 }

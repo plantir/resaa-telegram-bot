@@ -29,33 +29,13 @@ bot.on('message', async msg => {
   } catch (error) {
     await bot.sendMessage(msg.chat.id, error)
   }
-  let visit_doctor = await user.visit_doctor
-  if (!visit_doctor) {
+  let doctor = await user.last_visit_doctor
+  if (!doctor) {
     options.reply_markup.keyboard.push([{
       text: 'بازگشت به خانه'
     }])
+    return bot.sendMessage(msg.chat.id, 'لطفا انتخاب کنید', options)
   }
-
-  if (!visit_doctor) {
-    return
-  }
-  DoctorProvider.sned_doctor_profile(msg.chat.id, visit_doctor)
+  DoctorProvider.sned_doctor_profile(msg.chat.id, doctor.subscriberNumber)
 
 })
-
-function calc_amount(costPerMinute, minutes) {
-  let amount_list = []
-  for (let min of minutes) {
-    let amount = costPerMinute * min
-    if (amount < 10000) {
-      amount = 10000
-    } else {
-      amount = Math.ceil(amount / 5000) * 5000
-    }
-    amount_list.push({
-      perioud: min,
-      amount
-    })
-  }
-  return amount_list
-}
