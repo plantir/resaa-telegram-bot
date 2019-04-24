@@ -1,28 +1,28 @@
 const User = require('../Model/User')
 const Doctor = require('../Model/Doctor')
 const bot = require('../bot')
+const resaa_url = 'https://resaa.net'
 bot.onText(/شارژ اعتبار رسا/, async msg => {
   let message = 'جهت شارژ اعتبار خود یکی از مبالغ زیر را انتخاب نمایید'
   let options = {
     reply_markup: {
-      keyboard: [],
-      resize_keyboard: true
+      // keyboard: [],
+      inline_keyboard: [],
     }
   }
-  let amounts = [1000, 2000, 3000]
-  for (let amount of amounts) {
-    options.reply_markup.keyboard.push([
-      {
-        text: `${amount} تومان`
-      }
-    ])
+  let user = new User(msg.chat.id)
+  let phone = await user.phone
+  let amounts = [10000, 20000, 30000, 40000, 50000]
+  for (let key in amounts) {
+    options.reply_markup.inline_keyboard.push([{
+      text: `${amounts[key]} تومان`,
+      url: `${resaa_url}/charge?chargeId=${+key+1}&mobile=${phone}`
+    }])
   }
 
-  options.reply_markup.keyboard.push([
-    {
-      text: 'بازگشت به خانه'
-    }
-  ])
+  // options.reply_markup.keyboard.push([{
+  //   text: 'بازگشت به خانه'
+  // }])
 
   bot.sendMessage(msg.chat.id, message, options)
 })
@@ -39,12 +39,10 @@ bot.onText(/[0-9]+ تومان/, async msg => {
   let phone = await user.phone
   if (!phone) {
     message = `شما هنوز در رسا ثبت نام نکرده اید حهت ثبت نام روی دکمه ثبت نام کلیک کنید`
-    options.reply_markup.keyboard.push([
-      {
-        text: `ثبت نام`,
-        request_contact: true
-      }
-    ])
+    options.reply_markup.keyboard.push([{
+      text: `ثبت نام`,
+      request_contact: true
+    }])
     return bot.sendMessage(msg.chat.id, message, options)
   }
   try {
@@ -59,24 +57,18 @@ bot.onText(/[0-9]+ تومان/, async msg => {
     message = ` شما درخواست شارژ به مبلغ ${charge_amount} تومان برای شماره موبایل ${phone} داده اید`
     message += `\n در صورت تایید موارد فوق بر روی پرداخت فشار دهید `
 
-    options.reply_markup.keyboard.push([
-      {
-        text: 'پرداخت'
-      }
-    ])
-    options.reply_markup.keyboard.push([
-      {
-        text: 'بازگشت به خانه'
-      }
-    ])
+    options.reply_markup.keyboard.push([{
+      text: 'پرداخت'
+    }])
+    options.reply_markup.keyboard.push([{
+      text: 'بازگشت به خانه'
+    }])
 
     await bot.sendMessage(msg.chat.id, message, options)
   } catch (error) {
-    options.reply_markup.keyboard.push([
-      {
-        text: 'بازگشت به خانه'
-      }
-    ])
+    options.reply_markup.keyboard.push([{
+      text: 'بازگشت به خانه'
+    }])
     return bot.sendMessage(msg.chat.id, 'خطایی رخ داده است', options)
   }
 

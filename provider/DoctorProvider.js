@@ -11,7 +11,7 @@ class DoctorProvder {
         let res = await Doctor.find(doctor_id)
         let doctor = res.result.doctor
         let doctor_image_id = await Doctor.image_id(doctor_id)
-
+        user.visit_doctor = doctor.subscriberNumber
         user.last_visit_doctor = doctor
         let message = `\nدکتر ${doctor.firstName} ${doctor.lastName}`
         message += `\nکد رسا ${doctor.subscriberNumber}`
