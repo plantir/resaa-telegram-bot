@@ -102,8 +102,10 @@ bot.on('photo', async msg => {
 })
 bot.onText(/اتمام|تلاش مجدد/, async msg => {
     let user = new User(msg.chat.id);
-    let doctor_id = await user.visit_doctor
-    let res = await Doctor.find(doctor_id)
+    let {
+        subscriberNumber
+    } = await user.last_visit_doctor
+    let res = await Doctor.find(subscriberNumber)
     let doctor = res.result.doctor;
 
     let message;
