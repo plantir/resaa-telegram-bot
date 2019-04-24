@@ -1,3 +1,4 @@
+require('dotenv').config()
 require('./state/start')
 require('./state/contactus')
 require('./state/my_doctor')
@@ -12,7 +13,7 @@ require('./state/charge')
 require('./state/back')
 require('./state/payment_return')
 require('./state/test_answer')
-if (process.env.NODE_ENV !== 'development') {
+if (process.env.MODE !== 'polling') {
     const bot = require('./bot')
     const port = 80;
     const token = bot.token;
