@@ -17,6 +17,7 @@ bot.onText(/ارسال جواب آزمایش/, async msg => {
     let user = new User(msg.chat.id);
     let visit_doctor = await user.visit_doctor
     let phone = await user.phone
+    user.state = _enum.state.test_answer;
     let test_answer = await Doctor.request_test_answer(visit_doctor, phone)
     if (test_answer.status === 'needMoney') {
         message = `اعتبار فعلی شما ${test_answer.user_charge} تومان میباشد و در خواست شما نیاز به ${test_answer.request_price} تومان شارژ دارد `
@@ -34,7 +35,6 @@ bot.onText(/ارسال جواب آزمایش/, async msg => {
         return bot.sendMessage(msg.chat.id, message, options)
     }
     message = `هزینه جواب آزمایش ${test_answer.request_price} تومان می باشد و در صورت ارسال فایل از شارژ رسا شما کم میشود\nدر صورت تایید عکس آزمایش خود را بفرستید`
-    user.state = _enum.state.test_answer
     options.reply_markup.keyboard.push([{
         text: `بازگشت`,
     }])

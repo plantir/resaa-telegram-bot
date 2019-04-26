@@ -16,7 +16,7 @@ bot.onText(/شارژ اعتبار رسا/, async msg => {
   for (let key in amounts) {
     options.reply_markup.inline_keyboard.push([{
       text: `${amounts[key]} تومان`,
-      url: `${resaa_url}/charge?chargeId=${+key+1}&mobile=${phone}`
+      url: `${resaa_url}/charge?chargeId=${+key+1}&mobile=${phone}&chat_id=${msg.chat.id}`
     }])
   }
 

@@ -76,26 +76,21 @@ class DoctorProvder {
                 resize_keyboard: true
             }
         }
+        if (!phone) {
+            options.reply_markup.keyboard.push([{
+                text: `ثبت نام / ورود`,
+                request_contact: true
+            }])
+        }
         doctor.testAnswer = true;
-        if (doctor.testAnswer) {
+        if (phone && doctor.testAnswer) {
             options.reply_markup.keyboard.push([{
                 text: `ارسال جواب آزمایش`,
-                request_contact: phone ? false : true
             }])
-            // rows.push({
-            //     buttons: [{
-            //         type: phone ? "Simple" : "AskMyPhoneNumber",
-            //         button_view: {
-            //             text: `ارسال جواب آزمایش`,
-            //             type: "TextOnly"
-            //         }
-            //     }]
-            // })
         }
-        if (doctor.currentlyAvailable) {
+        if (phone && doctor.currentlyAvailable) {
             options.reply_markup.keyboard.push([{
                 text: `تماس با دکتر ${doctor.firstName} ${doctor.lastName}`,
-                request_contact: phone ? false : true
             }])
         }
         options.reply_markup.keyboard.push([{
