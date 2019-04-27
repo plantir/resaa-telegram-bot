@@ -37,7 +37,17 @@ bot.onText(/تماس با دکتر *.*/, async msg => {
   let doctor = res.result.doctor
   let minute_array = doctor.specialty.id == 41 ? [5, 10, 15, 30] : [3, 5, 10]
   let price = await Doctor.get_time_price(visit_doctor, phone)
-  let costPerMinute = price.result.quote.costPerMinute
+  // let duration = price.result.quote.duration;
+  // let costPerMinute = price.result.quote.costPerMinute
+  let {
+    costPerMinute,
+    duration,
+    isFreeFirstCall
+  } = price.result.quote
+  if (isFreeFirstCall) {
+    return bot.sendMessage(msg.chat.id, `شما تماس اول را مهمان رسا هستید\nشما میتوانید به مدت ${duration} دقیقه با دکتر ${doctor.firstName} ${doctor.lastName} صحبت کنید\nبرای برقراری تماس ابتدا با شماره 02174471111 تماس گرفته و سپس کد ${doctor.subscriberNumber} را شماره گیری نمایید`, )
+
+  }
   let amount_list = calc_amount(costPerMinute, minute_array)
   message = `هزینه تماس با دکتر ${doctor.firstName} ${doctor.lastName}`
   message += `\n\nدر صورتی که مدت زمان مکالمه کمتر از این مقدار باشد پول در حساب شما میماند و میتوانید در تماس های بعدی از آن استفاده نمایید`
@@ -45,10 +55,32 @@ bot.onText(/تماس با دکتر *.*/, async msg => {
   for (let item of amount_list) {
     options.reply_markup.inline_keyboard.push([{
       text: `${item.perioud} دقیقه ${item.amount} تومان`,
-      url: `${resaa_url}/charge?mobile=${phone}`
+      url: `${resaa_url}/charge?mobile=${phone}&chat_id=${msg.chat.id}`
     }])
   }
-  bot.sendMessage(msg.chat.id, message, options)
+  await bot.sendMessage(msg.chat.id, message, options)
+  bot.sendMessage(msg.chat.id, `شما میتوانید به مدت ${duration} دقیقه با دکتر ${doctor.firstName} ${doctor.lastName} صحبت کنید\nبرای برقراری تماس ابتدا با شماره 02174471111 تماس گرفته و سپس کد ${doctor.subscriberNumber} را شماره گیری نمایید`)
+  // bot.sendMessage(msg.chat.id, `شما میتوانید ${duration} دقیقه صحبت کنید`, {
+  //   reply_markup: {
+  //     keyboard: [
+  //       [{
+  //         text: 'تماس با پزشک'
+  //       }],
+  //       [{
+  //         text: 'بازگشت'
+  //       }],
+  //       [{
+  //         text: 'بازگشت به خانه'
+  //       }]
+  //     ],
+  //     resize_keyboard: true
+  //   }
+  // })
+})
+bot.onText(/تماس با پزشک/, async msg => {
+  let user = new User(msg.chat.id)
+  let doctor_id = await user.last_visit_doctor
+  bot.sendMessage(msg.chat.id, `برای صحبت با پزشک ابتدا شماره `)
 })
 
 function calc_amount(costPerMinute, minutes) {
