@@ -20,7 +20,7 @@ bot.on('message', async msg => {
       resize_keyboard: true
     }
   }
-  let phone = msg.contact.phone_number.replace('+98', '0')
+  let phone = msg.contact.phone_number.replace(/(\+98|98)/, '0')
 
   try {
     await user.register(phone)
