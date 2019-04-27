@@ -59,7 +59,7 @@ bot.onText(/تماس با دکتر *.*/, async msg => {
     }])
   }
   await bot.sendMessage(msg.chat.id, message, options)
-  bot.sendMessage(msg.chat.id, `شما میتوانید به مدت ${duration} دقیقه با دکتر ${doctor.firstName} ${doctor.lastName} صحبت کنید\nبرای برقراری تماس ابتدا با شماره 02174471111 تماس گرفته و سپس کد ${doctor.subscriberNumber} را شماره گیری نمایید`)
+  bot.sendMessage(msg.chat.id, `شما میتوانید به مدت ${duration} دقیقه 🕐  با دکتر ${doctor.firstName} ${doctor.lastName} صحبت کنید\nبرای برقراری تماس ابتدا با شماره 02174471111 ☎️ تماس گرفته و سپس کد ${doctor.subscriberNumber} را شماره گیری نمایید`)
   // bot.sendMessage(msg.chat.id, `شما میتوانید ${duration} دقیقه صحبت کنید`, {
   //   reply_markup: {
   //     keyboard: [
