@@ -17,7 +17,7 @@ class DoctorProvder {
         message += `\nکد رسا ${doctor.subscriberNumber}`
         message += `\n${doctor.expertise}`
         message += `\nوضعیت ${
-          doctor.currentlyAvailable ? 'در دسترس' : 'خارج از دسترس'
+          doctor.currentlyAvailable ? ' ✅ در دسترس' : ' ❌ خارج از دسترس '
         }`
         await bot.sendPhoto(chat_id, doctor_image_id, {
             caption: message
@@ -48,7 +48,7 @@ class DoctorProvder {
                     date_name = 'پنجشنبه    '
                     break
                 case 6:
-                    date_name = 'جمعه          '
+                    date_name = 'جمعه             '
                     break
             }
             let start_time_hour = Math.floor((item.from / 60) % 24)

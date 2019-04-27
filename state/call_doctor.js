@@ -45,7 +45,7 @@ bot.onText(/تماس با دکتر *.*/, async msg => {
     isFreeFirstCall
   } = price.result.quote
   if (isFreeFirstCall) {
-    return bot.sendMessage(msg.chat.id, `شما تماس اول را مهمان رسا هستید\nشما میتوانید به مدت ${duration} دقیقه با دکتر ${doctor.firstName} ${doctor.lastName} صحبت کنید\nبرای برقراری تماس ابتدا با شماره 02174471111 تماس گرفته و سپس کد ${doctor.subscriberNumber} را شماره گیری نمایید`, )
+    return bot.sendMessage(msg.chat.id, `شما تماس اول را مهمان رسا هستید\nشما میتوانید به مدت ${duration} دقیقه با دکتر 🕐 ${doctor.firstName} ${doctor.lastName} صحبت کنید\nبرای برقراری تماس ابتدا با شماره 02174471111 تماس گرفته و سپس کد ${doctor.subscriberNumber} را شماره گیری نمایید`, )
 
   }
   let amount_list = calc_amount(costPerMinute, minute_array)

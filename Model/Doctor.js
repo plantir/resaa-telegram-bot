@@ -5,6 +5,7 @@ const bot_token =
   'DG0RIQVKTTKCUEUGURNGOHBLWULTSSQFHISIFXGXDACBMGZFWKDWNBLZKQLFSJDY'
 const dbConf = require('../config/db.config')
 const redis = dbConf.redis
+const _ = require('lodash')
 class Doctor {
   constructor() {
     this.API_URL = process.env.NODE_ENV === 'development' ? 'https://webapi.resaa.net' : 'http://resa-web-api.bsn.local';
@@ -21,7 +22,7 @@ class Doctor {
     let model = new Doctor()
     let uri = `${model.API_URL}/Doctors?fields=${
       model.fields
-      }&limit=${limit}&offset=${offset}`
+      }&limit=1000&offset=${offset}`
     if (specialtyId) {
       uri += `&specialtyId=${specialtyId}`
     }
@@ -31,10 +32,21 @@ class Doctor {
     if (name) {
       uri += `&name=${name}`
     }
-    return request({
-      method: 'GET',
-      json: true,
-      uri: encodeURI(uri)
+    return new Promise((resolve, reject) => {
+
+      request({
+        method: 'GET',
+        json: true,
+        uri: encodeURI(uri)
+      }).then(res => {
+        let available = res.result.doctors.filter(item => item.currentlyAvailable);
+        let notavailable = res.result.doctors.filter(item => !item.currentlyAvailable);
+        let doctors = _.sampleSize(available, limit)
+        if (doctors.length < limit) {
+          doctors.push(..._.sampleSize(notavailable, limit - doctors.length))
+        }
+        resolve(doctors);
+      }).catch(err => reject(err))
     })
   }
   static find(id) {
