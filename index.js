@@ -20,17 +20,14 @@ const port = process.env.port || 3333;
 const token = bot.token;
 const url = 'https://telegram.resaa.net';
 const express = require('express');
+const cors = require('cors')
 const bodyParser = require('body-parser');
 const User = require('./Model/User')
 const Doctor = require('./Model/Doctor')
 const _enum = require('./config/enum')
 // bot.setWebHook(url);
 const app = express();
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+app.use(cors())
 app.use(bodyParser.json());
 app.post(`/`, (req, res) => {
     bot.processUpdate(req.body);
