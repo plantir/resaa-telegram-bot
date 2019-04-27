@@ -1,9 +1,0 @@
-Thu, 25 Apr 2019 20:09:51 GMT node-telegram-bot-api deprecated Automatic enabling of cancellation of promises is deprecated.
-In the future, you will have to enable it yourself.
-See https://github.com/yagop/node-telegram-bot-api/issues/319. at internal\modules\cjs\loader.js:689:30
-(node:3152) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
-Thu, 25 Apr 2019 20:17:55 GMT node-telegram-bot-api deprecated Buffers will have their filenames default to "filename" instead of "data". See https://github.com/yagop/node-telegram-bot-api/blob/master/doc/usage.md#sending-files for more information on how sending files has been improved and on how to disable this deprecation message altogether. at provider\DoctorProvider.js:22:19
-Thu, 25 Apr 2019 20:17:55 GMT node-telegram-bot-api deprecated In the future, content-type of files you send will default to "application/octet-stream". See https://github.com/yagop/node-telegram-bot-api/blob/master/doc/usage.md#sending-files for more information on how sending files has been improved and on how to disable this deprecation message altogether. at provider\DoctorProvider.js:22:19
-node_redis: Deprecated: The SET command contains a "null" argument.
-This is converted to a "null" string now and will return an error from v.3.0 on.
-Please handle this in your code to make sure everything works as you intended it to.
