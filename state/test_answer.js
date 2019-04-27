@@ -17,12 +17,28 @@ bot.onText(/ارسال جواب آزمایش/, async msg => {
     let user = new User(msg.chat.id);
     let visit_doctor = await user.visit_doctor
     let phone = await user.phone
+    let doctor = await user.last_visit_doctor
     user.state = _enum.state.test_answer;
     let test_answer = await Doctor.request_test_answer(visit_doctor, phone)
     if (test_answer.status === 'needMoney') {
         message = `اعتبار فعلی شما ${test_answer.user_charge} تومان میباشد و در خواست شما نیاز به ${test_answer.request_price} تومان شارژ دارد `
         options.reply_markup.keyboard.push([{
             text: `شارژ اعتبار رسا`,
+        }])
+        options.reply_markup.keyboard.push([{
+            text: `بازگشت`,
+        }])
+        options.reply_markup.keyboard.push([{
+            text: `بازگشت به خانه`,
+        }])
+
+
+        return bot.sendMessage(msg.chat.id, message, options)
+    } else if (test_answer.status === 'needTalk') {
+        user.state = _enum.state.doctor_detail
+        message = `شما در ۲۴ ساعت اخیر با این پزشک مکالمه ای نداشته اید لطفا ابتدا با پزشک خود مکالمه کنید سپس جواب آزمایش را ارسال نمایید `
+        options.reply_markup.keyboard.push([{
+            text: `تماس با دکتر ${doctor.firstName} ${doctor.lastName}`,
         }])
         options.reply_markup.keyboard.push([{
             text: `بازگشت`,

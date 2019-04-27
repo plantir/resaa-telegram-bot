@@ -115,8 +115,15 @@ class Doctor {
             request_price: 15000
           })
         }
+        if (id == 7536) {
+          return resolve({
+            status: 'ok',
+            user_charge: 8000,
+            request_price: 15000
+          })
+        }
         resolve({
-          status: 'ok',
+          status: 'needTalk',
           user_charge: 8000,
           request_price: 15000
         })
