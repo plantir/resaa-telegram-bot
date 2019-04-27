@@ -36,7 +36,7 @@ bot.onText(/ارسال جواب آزمایش/, async msg => {
         return bot.sendMessage(msg.chat.id, message, options)
     } else if (test_answer.status === 'needTalk') {
         user.state = _enum.state.doctor_detail
-        message = `شما در ۲۴ ساعت اخیر با این پزشک مکالمه ای نداشته اید لطفا ابتدا با پزشک خود مکالمه کنید سپس جواب آزمایش را ارسال نمایید `
+        message = `برای ارسال جواب آزمایش نیاز به هماهنگی قبلی با پزشک هست.\nشما در ۲۴ ساعت اخیر با این پزشک مکالمه ای نداشته اید لطفا ابتدا با پزشک خود مکالمه کنید سپس جواب آزمایش را ارسال نمایید`
         options.reply_markup.keyboard.push([{
             text: `تماس با دکتر ${doctor.firstName} ${doctor.lastName}`,
         }])
