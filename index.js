@@ -15,7 +15,7 @@ require('./state/payment_return')
 require('./state/test_answer')
 if (process.env.MODE !== 'polling') {
     const bot = require('./bot')
-    const port = 80;
+    const port = process.env.port || 80;
     const token = bot.token;
     const url = 'https://telegram.resaa.net';
     const express = require('express');
