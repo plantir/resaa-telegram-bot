@@ -2,3 +2,5 @@ node_modules
 yarn.lock
 *.rar
 *.zip
+yarn-error.log
+iisnode/
