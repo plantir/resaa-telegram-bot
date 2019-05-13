@@ -75,7 +75,24 @@ bot.onText(/تماس با دکتر *.*/, async msg => {
       doctor.lastName
     } صحبت کنید\nبرای برقراری تماس ابتدا با شماره 02174471111 ☎️ تماس گرفته و سپس کد ${
       doctor.subscriberNumber
-    } را شماره گیری نمایید`
+    } را شماره گیری نمایید`,
+    {
+      reply_markup: {
+        keyboard: [
+          [
+            {
+              text: 'بازگشت به خانه'
+            }
+          ],
+          [
+            {
+              text: 'بازگشت'
+            }
+          ]
+        ],
+        resize_keyboard: true
+      }
+    }
   );
   // bot.sendMessage(msg.chat.id, `شما میتوانید ${duration} دقیقه صحبت کنید`, {
   //   reply_markup: {
