@@ -1,8 +1,10 @@
 const bot = require('../bot');
 const User = require('../Model/User');
+const _enum = require('../config/enum');
 bot.onText(/پرسش از پزشک خودم/, async msg => {
   let user = new User(msg.chat.id);
   let doctor = await user.last_visit_doctor;
+  user.state = _enum.state.select_doctor;
   let message = `نام یا کد رسا پزشک خود را وارد کنید`;
   let options = {
     reply_markup: {
@@ -11,9 +13,7 @@ bot.onText(/پرسش از پزشک خودم/, async msg => {
     }
   };
   if (doctor) {
-    let text = `${doctor.subscriberNumber} ${doctor.firstName} ${
-      doctor.lastName
-    }`;
+    let text = `${doctor.subscriberNumber} ${doctor.firstName} ${doctor.lastName}`;
     options.reply_markup.keyboard.push([
       {
         text
