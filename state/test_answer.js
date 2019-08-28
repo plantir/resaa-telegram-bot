@@ -21,7 +21,7 @@ bot.onText(/ارسال جواب آزمایش/, async msg => {
   user.state = _enum.state.test_answer;
   let test_answer = await Doctor.request_test_answer(visit_doctor, phone);
   if (test_answer.status === 'needMoney') {
-    message = `اعتبار فعلی شما ${test_answer.user_charge} تومان میباشد و در خواست شما نیاز به ${test_answer.request_price} تومان شارژ دارد `;
+    message = `در خواست شما نیاز به ${test_answer.request_price} تومان شارژ دارد و اعتبار شما کافی نمی‌باشد لطفا حساب خود را شارژ نمایید`;
     options.reply_markup.keyboard.push([
       {
         text: `شارژ اعتبار رسا`
@@ -111,7 +111,7 @@ bot.on('photo', async msg => {
   let files = await user.add_file(
     `https://api.telegram.org/file/bot${bot_token}/${file_path}`
   );
-  let message = `شما تا کنون ${files.length} فایل پیوست کرده اید اگر فایل دیگری هم دارید ارسال کنید در غیر اینصورت بر روی دکمه ارسال جواب آزمایش ضربه بزنید`;
+  let message = `شما تا کنون ${files.length} فایل پیوست کرده اید اگر فایل دیگری هم دارید ارسال کنید در غیر اینصورت بر روی دکمه اتمام کلیک کنید`;
   let options = {
     reply_markup: {
       keyboard: [],
