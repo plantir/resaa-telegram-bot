@@ -98,8 +98,15 @@ bot.onText(/حذف تمامی فایل ها و ارسال مجدد/, async msg =
 bot.on('photo', async msg => {
   let user = new User(msg.chat.id);
   let state = await user.state;
-  if (state != _enum.state.test_answer) {
-    return;
+  // if (state != _enum.state.test_answer) {
+  //   return;
+  // }
+  let files = await user.get_files();
+  if (files.length > 7) {
+    return bot.sendMessage(
+      msg.chat.id,
+      `شما تا کنون ${files.length} فایل پیوست کرده اید تعداد حداکثر فایل های قابل پیوست ۸ عدد میباشد`
+    );
   }
   let { file_id } = msg.photo.reverse()[0];
   let {
@@ -108,7 +115,7 @@ bot.on('photo', async msg => {
     url: `https://api.telegram.org/bot${bot_token}/getFile?file_id=${file_id}`,
     json: true
   });
-  let files = await user.add_file(
+  files = await user.add_file(
     `https://api.telegram.org/file/bot${bot_token}/${file_path}`
   );
   let message = `شما تا کنون ${files.length} فایل پیوست کرده اید اگر فایل دیگری هم دارید ارسال کنید در غیر اینصورت بر روی دکمه اتمام کلیک کنید`;

@@ -87,8 +87,7 @@ class DoctorProvder {
         }
       ]);
     }
-    doctor.testAnswer = true;
-    if (phone && doctor.testAnswer) {
+    if (phone && doctor.providesDiagnosticDocumentsService) {
       options.reply_markup.keyboard.push([
         {
           text: `ارسال جواب آزمایش`

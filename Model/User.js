@@ -271,6 +271,18 @@ class User {
       });
     });
   }
+  get_files() {
+    return new Promise((resolve, reject) => {
+      redis.get(this.chatId + '_testAnswer_files', (err, testAnswers) => {
+        if (testAnswers && testAnswers !== 'null') {
+          testAnswers = JSON.parse(testAnswers);
+        } else {
+          testAnswers = [];
+        }
+        resolve(testAnswers);
+      });
+    });
+  }
   send_testAnswer(doctor_chat_id) {
     if (process.env.NODE_ENV == 'development') {
       doctor_chat_id = 96852497;
