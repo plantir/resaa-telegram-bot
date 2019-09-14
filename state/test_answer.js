@@ -98,9 +98,9 @@ bot.onText(/حذف تمامی فایل ها و ارسال مجدد/, async msg =
 bot.on('photo', async msg => {
   let user = new User(msg.chat.id);
   let state = await user.state;
-  // if (state != _enum.state.test_answer) {
-  //   return;
-  // }
+  if (state != _enum.state.test_answer) {
+    return;
+  }
   let files = await user.get_files();
   if (files.length > 7) {
     return bot.sendMessage(

@@ -300,7 +300,8 @@ class User {
           method: 'POST',
           body: {
             testAnswers,
-            chat_id: doctor_chat_id
+            chat_id: doctor_chat_id,
+            patient_chatid: this.chatId
           },
           json: true
         })

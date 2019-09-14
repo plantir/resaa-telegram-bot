@@ -25,6 +25,8 @@ const bodyParser = require('body-parser');
 const User = require('./Model/User');
 const Doctor = require('./Model/Doctor');
 const _enum = require('./config/enum');
+const fs = require('fs');
+const request = require('request-promise');
 // bot.setWebHook(url);
 const app = express();
 app.use(cors());
@@ -32,6 +34,18 @@ app.use(bodyParser.json());
 app.post(`/`, (req, res) => {
   bot.processUpdate(req.body);
   res.sendStatus(200);
+});
+app.post('/replay_test', async (req, res) => {
+  let { msg } = req.body;
+  let [test_answer_id, chat_id] = msg.reply_to_message.caption.split('#');
+  let title = `پاسخ پزشک به آزمایش شماره ${test_answer_id}:`;
+  bot.sendMessage(chat_id, title);
+  if (msg.text) {
+    bot.sendMessage(chat_id, `${msg.text}`);
+  } else if (msg.voice) {
+    const stream = request.get(msg.voice.file_path);
+    bot.sendVoice(chat_id, stream);
+  }
 });
 app.post('/chargeNotify', async (req, res) => {
   let { chat_id, charge_amount, user_credit } = req.body;
