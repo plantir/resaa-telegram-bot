@@ -51,7 +51,7 @@ class Doctor {
   }
   static find(id) {
     let model = new Doctor();
-    let uri = `${model.API_URL}/Doctors/${id}?fields=id,firstName,lastName,currentlyAvailable,subscriberNumber,specialty,tags,expertise,timetable,title,workplaces&clientTimeZoneOffset=-210`;
+    let uri = `${model.API_URL}/Doctors/${id}?fields=id,firstName,providesDiagnosticDocumentsService,lastName,currentlyAvailable,subscriberNumber,specialty,tags,expertise,timetable,title,workplaces&clientTimeZoneOffset=-210`;
     return request({
       method: 'GET',
       json: true,
