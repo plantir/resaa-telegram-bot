@@ -15,6 +15,7 @@ require('./state/charge');
 require('./state/back');
 require('./state/payment_return');
 require('./state/test_answer');
+require('./state/prevent_replay');
 const bot = require('./bot');
 const port = process.env.port || 9000;
 const token = bot.token;
