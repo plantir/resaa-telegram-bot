@@ -38,11 +38,12 @@ app.post(`/`, (req, res) => {
 app.post('/replay_test', async (req, res) => {
   let { msg } = req.body;
   let [test_answer_id, chat_id] = msg.reply_to_message.caption.split('#');
-  let title = `پاسخ پزشک به آزمایش شماره ${test_answer_id}:`;
-  bot.sendMessage(chat_id, title);
+  let title = `پاسخ پزشک به آزمایش شماره ${test_answer_id}:\n\n ‼️توجه : شما نمیتوانید روی  این پیغام ریپلای کنید`;
   if (msg.text) {
+    await bot.sendMessage(chat_id, title);
     bot.sendMessage(chat_id, `${msg.text}`);
   } else if (msg.voice) {
+    await bot.sendMessage(chat_id, title);
     const stream = request.get(msg.voice.file_path);
     bot.sendVoice(chat_id, stream);
   }
