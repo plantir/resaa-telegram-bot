@@ -17,7 +17,7 @@ class Doctor {
 
   static get_doctors({ limit = 20, offset = 0, specialtyId, code, name }) {
     let model = new Doctor();
-    let uri = `${model.API_URL}/Doctors?fields=${model.fields}&limit=1000&offset=${offset}`;
+    let uri = `${process.env.API_URL}/Doctors?fields=${model.fields}&limit=1000&offset=${offset}`;
     if (specialtyId) {
       uri += `&specialtyId=${specialtyId}`;
     }
@@ -51,7 +51,7 @@ class Doctor {
   }
   static find(id) {
     let model = new Doctor();
-    let uri = `${model.API_URL}/Doctors/${id}?fields=id,firstName,providesDiagnosticDocumentsService,lastName,currentlyAvailable,subscriberNumber,specialty,tags,expertise,timetable,title,workplaces&clientTimeZoneOffset=-210`;
+    let uri = `${process.env.API_URL}/Doctors/${id}?fields=id,firstName,providesDiagnosticDocumentsService,lastName,currentlyAvailable,subscriberNumber,specialty,tags,expertise,timetable,title,workplaces&clientTimeZoneOffset=-210`;
     return request({
       method: 'GET',
       json: true,
@@ -68,7 +68,7 @@ class Doctor {
           let res = await request({
             method: 'GET',
             json: true,
-            uri: `${model.API_URL}/Rubika/Doctors/MedicalSpecialties`
+            uri: `${process.env.API_URL}/Rubika/Doctors/MedicalSpecialties`
           });
           redis.set(
             `speciality_list`,
@@ -84,7 +84,7 @@ class Doctor {
     return request({
       method: 'GET',
       json: true,
-      uri: `${model.API_URL}/Rubika/Doctors/${id}/communicationquote?patientphonenumber=${phone}`
+      uri: `${process.env.API_URL}/Rubika/Doctors/${id}/communicationquote?patientphonenumber=${phone}`
     });
   }
   static image_id(doctor_id) {
@@ -95,7 +95,7 @@ class Doctor {
           return resolve(file_id);
         } else {
           request
-            .get(`${model.API_URL}/doctors/${doctor_id}/Image`, {
+            .get(`${process.env.API_URL}/doctors/${doctor_id}/Image`, {
               encoding: null
             })
             .then(image => {
@@ -114,7 +114,7 @@ class Doctor {
       return request({
         method: 'GET',
         json: true,
-        uri: `${model.API_URL}/Doctors/${id}/DiagnosticDocumentsService/Quote?patientPhoneNumber=${phone}`
+        uri: `${process.env.API_URL}/Doctors/${id}/DiagnosticDocumentsService/Quote?patientPhoneNumber=${phone}`
       })
         .then(res => {
           let status = res.result.quote.status;
