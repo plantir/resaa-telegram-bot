@@ -12,5 +12,8 @@
     "node-telegram-bot-api": "^0.30.0",
     "redis": "^2.8.0",
     "winston": "^3.2.1"
+  },
+  "scripts": {
+    "release": "git push origin master && git push origin next && git push dist master && git push dist next"
   }
 }
