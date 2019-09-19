@@ -1,3 +1,4 @@
+const Logger = require('../Logger');
 const dbConf = require('../config/db.config');
 const redis = dbConf.redis;
 const request = require('request-promise');
@@ -309,7 +310,12 @@ class User {
             this.remove_files();
             resolve({ tracking_code: res, count: testAnswers.length });
           })
-          .catch(err => {
+          .catch(error => {
+            Logger.log({
+              level: 'error',
+              title: 'test_answer',
+              error
+            });
             reject('درخواست شما با مشکل مواجه شد لطفا مجددا تلاش کنید');
           });
       });

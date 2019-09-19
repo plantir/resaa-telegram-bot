@@ -5,6 +5,7 @@ const bot_token = bot.token;
 const _enum = require('../config/enum');
 const _ = require('lodash');
 const request = require('request-promise');
+const Logger = require('../Logger');
 bot.onText(/ارسال جواب آزمایش/, async msg => {
   let message = '';
   let options = {
@@ -170,7 +171,6 @@ bot.onText(/اتمام|تلاش مجدد/, async msg => {
     ]);
     user.confirm_testAnswer(doctor_id, tracking_code, count);
   } catch (error) {
-    message = error;
     message = error;
     options.reply_markup.keyboard.push([
       {

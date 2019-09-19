@@ -28,6 +28,7 @@ const Doctor = require('./Model/Doctor');
 const _enum = require('./config/enum');
 const fs = require('fs');
 const request = require('request-promise');
+const Logger = require('./Logger');
 // bot.setWebHook(url);
 const app = express();
 app.use(cors());
