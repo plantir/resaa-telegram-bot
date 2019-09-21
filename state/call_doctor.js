@@ -45,15 +45,12 @@ bot.onText(/تماس با دکتر *.*/, async msg => {
   // let costPerMinute = price.result.quote.costPerMinute
   let { costPerMinute, duration, isFreeFirstCall } = price.result.quote;
   if (isFreeFirstCall) {
+    try {
+      await Doctor.book(doctor.subscriberNumber, phone);
+    } catch (error) {}
     return bot.sendMessage(
       msg.chat.id,
-      `شما تماس اول را مهمان رسا هستید\nشما میتوانید به مدت ${duration} دقیقه با دکتر 🕐 ${
-        doctor.firstName
-      } ${
-        doctor.lastName
-      } صحبت کنید\nبرای برقراری تماس ابتدا با شماره 02174471111 تماس گرفته و سپس کد ${
-        doctor.subscriberNumber
-      } را شماره گیری نمایید`
+      `شما تماس اول را مهمان رسا هستید\nشما میتوانید به مدت ${duration} دقیقه با دکتر 🕐 ${doctor.firstName} ${doctor.lastName} صحبت کنید\nبرای برقراری تماس  با   شماره 02174471402 تماس حاصل نمایید`
     );
   }
   let amount_list = calc_amount(costPerMinute, minute_array);
@@ -69,13 +66,12 @@ bot.onText(/تماس با دکتر *.*/, async msg => {
     ]);
   }
   await bot.sendMessage(msg.chat.id, message, options);
+  try {
+    await Doctor.book(doctor.subscriberNumber, phone);
+  } catch (error) {}
   bot.sendMessage(
     msg.chat.id,
-    `شما میتوانید به مدت ${duration} دقیقه 🕐  با دکتر ${doctor.firstName} ${
-      doctor.lastName
-    } صحبت کنید\nبرای برقراری تماس ابتدا با شماره 02174471111 ☎️ تماس گرفته و سپس کد ${
-      doctor.subscriberNumber
-    } را شماره گیری نمایید`,
+    `شما میتوانید به مدت ${duration} دقیقه 🕐  با دکتر ${doctor.firstName} ${doctor.lastName} صحبت کنید\nبرای برقراری تماس  با   شماره 02174471402 ☎️ تماس حاصل نمایید`,
     {
       reply_markup: {
         keyboard: [
@@ -92,7 +88,8 @@ bot.onText(/تماس با دکتر *.*/, async msg => {
         ],
         resize_keyboard: true
       }
-    }
+    },
+    false
   );
   // bot.sendMessage(msg.chat.id, `شما میتوانید ${duration} دقیقه صحبت کنید`, {
   //   reply_markup: {

@@ -87,6 +87,13 @@ class Doctor {
       uri: `${process.env.API_URL}/Rubika/Doctors/${id}/communicationquote?patientphonenumber=${phone}`
     });
   }
+  static book(id, phone) {
+    return request({
+      method: 'POST',
+      json: true,
+      uri: `${process.env.API_URL}/Doctors/${id}/CommunicationBooking?patientPhoneNumber=${phone}`
+    });
+  }
   static image_id(doctor_id) {
     let model = new Doctor();
     return new Promise((resolve, reject) => {

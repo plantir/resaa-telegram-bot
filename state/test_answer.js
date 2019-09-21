@@ -61,6 +61,7 @@ bot.onText(/ارسال جواب آزمایش/, async msg => {
 
     return bot.sendMessage(msg.chat.id, message, options);
   }
+  await user.remove_files();
   message = `هزینه جواب آزمایش ${test_answer.request_price} تومان می باشد و در صورت ارسال فایل از شارژ رسا شما کم میشود\nدر صورت تایید عکس آزمایش خود را بفرستید`;
   options.reply_markup.keyboard.push([
     {

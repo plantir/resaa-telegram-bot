@@ -112,7 +112,7 @@ class DoctorProvder {
       }
     ]);
 
-    bot.sendMessage(chat_id, time_message, options);
+    bot.sendMessage(chat_id, time_message, options, false);
     // let user = new User(chat_id)
     // user.state = _enum.state.doctor_detail;
     // user.visit_doctor = doctor_id;
