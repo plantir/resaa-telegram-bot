@@ -53,12 +53,22 @@ bot.on('message', async msg => {
   if (state != _enum.state.search_doctor) {
     return;
   }
+  let is_exist = Object.values(_enum.regex_state).some(item => {
+    return item.test(msg.text);
+  });
+  if (is_exist) {
+    return;
+  }
   let is_doctor = /[0-9]{4,4} ./g.test(msg.text);
   if (is_doctor) {
     return;
   }
-  let is_code = /^\d+$/.test(msg.text);
+  let is_code = /^[\d\u06F0-\u06F9]+$/.test(msg.text);
   if (is_code) {
+    msg.text = msg.text.replace(/[۰-۹]/g, function(w) {
+      var persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+      return persian.indexOf(w);
+    });
     doctors = await Doctor.get_doctors({
       code: msg.text
     });
